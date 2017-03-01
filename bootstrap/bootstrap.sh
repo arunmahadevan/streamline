@@ -124,6 +124,7 @@ function add_all_bundles {
     # === Source ===
     add_bundle /streams/componentbundles/SOURCE $component_dir/sources/kafka-source-topology-component.json
     add_bundle /streams/componentbundles/SOURCE $component_dir/sources/hdfs-source-topology-component.json
+    add_bundle /streams/componentbundles/SOURCE $component_dir/sources/eventhubs-source-topology-component.json
     # === Processor ===
     add_bundle /streams/componentbundles/PROCESSOR $component_dir/processors/rule-topology-component.json
     add_bundle /streams/componentbundles/PROCESSOR $component_dir/processors/window-topology-component.json
@@ -140,6 +141,7 @@ function add_all_bundles {
     add_bundle /streams/componentbundles/SINK $component_dir/sinks/druid-sink-topology-component.json
     add_bundle /streams/componentbundles/SINK $component_dir/sinks/solr-sink-topology-component.json
     add_bundle /streams/componentbundles/SINK $component_dir/sinks/kafka-sink-topology-component.json
+    add_bundle /streams/componentbundles/SINK $component_dir/sinks/hive-sink-topology-component.json
     # === Topology ===
     add_bundle /streams/componentbundles/TOPOLOGY $component_dir/topology/storm-topology-component.json
 
