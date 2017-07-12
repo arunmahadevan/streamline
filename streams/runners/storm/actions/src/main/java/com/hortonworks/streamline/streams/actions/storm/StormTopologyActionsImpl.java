@@ -13,7 +13,7 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
  **/
-package com.hortonworks.streamline.streams.actions.storm.topology;
+package com.hortonworks.streamline.streams.actions.storm;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -65,7 +65,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

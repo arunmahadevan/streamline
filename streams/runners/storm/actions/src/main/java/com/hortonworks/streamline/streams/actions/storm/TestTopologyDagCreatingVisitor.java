@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.hortonworks.streamline.streams.actions.storm.topology;
+package com.hortonworks.streamline.streams.actions.storm;
 
 import com.hortonworks.streamline.common.Config;
 import com.hortonworks.streamline.streams.layout.component.Edge;

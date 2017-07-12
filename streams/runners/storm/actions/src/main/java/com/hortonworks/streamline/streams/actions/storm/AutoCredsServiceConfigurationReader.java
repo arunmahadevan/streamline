@@ -1,4 +1,4 @@
-package com.hortonworks.streamline.streams.actions.storm.topology;
+package com.hortonworks.streamline.streams.actions.storm;
 
 import com.hortonworks.streamline.streams.catalog.Cluster;
 import com.hortonworks.streamline.streams.catalog.Namespace;
