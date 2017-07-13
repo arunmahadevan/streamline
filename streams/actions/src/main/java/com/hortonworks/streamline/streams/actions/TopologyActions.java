@@ -29,34 +29,42 @@ import java.util.Map;
  */
 public interface TopologyActions {
     // Any one time initialization is done here
-    void init (Map<String, Object> conf);
+    void init(Map<String, Object> conf);
 
     // Deploy the artifact generated using the underlying streaming
     // engine
     void deploy(TopologyLayout topology, String mavenArtifacts, TopologyActionContext ctx, String asUser) throws Exception;
 
+    //Kill the artifact that was deployed using deploy
+    void kill(TopologyLayout topology, String asUser) throws Exception;
+
     // Compose and run parameter topology as test mode using the underlying streaming engine.
     // The parameter 'topology' should contain its own topology DAG.
     // Please refer the javadoc of TestRunSource and also TestRunSink to see which information this method requires.
-    void testRun(TopologyLayout topology, String mavenArtifacts,
-                 Map<String, TestRunSource> testRunSourcesForEachSource,
-                 Map<String, TestRunProcessor> testRunProcessorsForEachProcessor,
-                 Map<String, TestRunSink> testRunSinksForEachSink) throws Exception;
-
-    //Kill the artifact that was deployed using deploy
-    void kill (TopologyLayout topology, String asUser) throws Exception;
+    default void testRun(TopologyLayout topology, String mavenArtifacts,
+                         Map<String, TestRunSource> testRunSourcesForEachSource,
+                         Map<String, TestRunProcessor> testRunProcessorsForEachProcessor,
+                         Map<String, TestRunSink> testRunSinksForEachSink) throws Exception {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 
     //Validate the json representing the Streamline based on underlying streaming
     // engine
-    void validate (TopologyLayout topology) throws Exception;
+    default void validate(TopologyLayout topology) throws Exception {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 
     //Suspend the json representing the Streamline based on underlying streaming
     // engine
-    void suspend (TopologyLayout topology, String asUser) throws Exception;
+    default void suspend(TopologyLayout topology, String asUser) throws Exception {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 
     //Resume the json representing the Streamline based on underlying streaming
     // engine
-    void resume (TopologyLayout topology, String asUser) throws Exception;
+    default void resume(TopologyLayout topology, String asUser) throws Exception {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 
     // return topology status
     Status status(TopologyLayout topology, String asUser) throws Exception;
@@ -78,6 +86,7 @@ public interface TopologyActions {
 
     interface Status {
         String getStatus();
+
         Map<String, String> getExtra();
     }
 }

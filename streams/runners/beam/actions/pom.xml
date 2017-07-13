@@ -11,5 +11,11 @@
 
     <artifactId>streamline-actions-beam</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.hortonworks.streamline</groupId>
+            <artifactId>streamline-actions</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
