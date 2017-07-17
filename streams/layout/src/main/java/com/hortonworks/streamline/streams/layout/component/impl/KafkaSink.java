@@ -18,5 +18,16 @@ package com.hortonworks.streamline.streams.layout.component.impl;
 import com.hortonworks.streamline.streams.layout.component.StreamlineSink;
 
 public class KafkaSink extends StreamlineSink {
+    public static final String BOOSTRAP_SERVERS = "bootstrapServers";
+    public static final String TOPIC = "topic";
+
     public KafkaSink() {}
+
+    public String getBoostrapServers() {
+        return getConfig().get(BOOSTRAP_SERVERS);
+    }
+
+    public String getTopic() {
+        return getConfig().get(TOPIC);
+    }
 }

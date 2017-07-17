@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <beam.version>2.0.0</beam.version>
+    </properties>
+
     <artifactId>streamline-runners-beam</artifactId>
     <packaging>pom</packaging>
     <modules>

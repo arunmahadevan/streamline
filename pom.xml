@@ -56,6 +56,7 @@
         <woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
         <druid.tranquility.version>0.8.2</druid.tranquility.version>
         <spring.version>4.3.6.RELEASE</spring.version>
+        <kafka.version>0.10.2.1</kafka.version>
 
         <!-- Runtime Scope Dependencies -->
         <logback.version>1.1.7</logback.version>

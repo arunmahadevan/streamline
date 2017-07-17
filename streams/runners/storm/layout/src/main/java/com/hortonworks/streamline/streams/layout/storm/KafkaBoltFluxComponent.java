@@ -16,6 +16,7 @@
 package com.hortonworks.streamline.streams.layout.storm;
 
 import com.hortonworks.streamline.streams.layout.TopologyLayoutConstants;
+import com.hortonworks.streamline.streams.layout.component.impl.KafkaSink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +28,13 @@ import java.util.List;
  */
 public class KafkaBoltFluxComponent extends AbstractFluxComponent {
     private static final Logger LOG = LoggerFactory.getLogger(KafkaBoltFluxComponent.class);
+    private KafkaSink kafkaSink;
 
     public KafkaBoltFluxComponent () {}
 
     @Override
     protected void generateComponent() {
+        kafkaSink = (KafkaSink) conf.get(StormTopologyLayoutConstants.STREAMLINE_COMPONENT_CONF_KEY);
         validateSSLConfig();
         setSaslJaasConfig();
         String boltId = "kafkaBolt" + UUID_FOR_COMPONENTS;

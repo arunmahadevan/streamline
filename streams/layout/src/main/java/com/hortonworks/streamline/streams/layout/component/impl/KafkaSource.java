@@ -16,10 +16,25 @@
 package com.hortonworks.streamline.streams.layout.component.impl;
 
 import com.hortonworks.streamline.streams.layout.component.StreamlineSource;
-import com.hortonworks.streamline.streams.layout.component.TopologyDagVisitor;
 
 public class KafkaSource extends StreamlineSource {
+    public static final String BOOTSTRAP_SERVERS = "bootstrapServers";
+    public static final String TOPIC = "topic";
+    public static final String SCHEMA_REGISTRY_URL = "schemaRegistryUrl";
 
-    public KafkaSource() {}
+    public KafkaSource() {
+    }
+
+    public String getBootstrapServers() {
+        return getConfig().get(BOOTSTRAP_SERVERS);
+    }
+
+    public String getTopic() {
+        return getConfig().get(TOPIC);
+    }
+
+    public String getSchemaRegistryUrl() {
+        return getConfig().get(SCHEMA_REGISTRY_URL);
+    }
 
 }
