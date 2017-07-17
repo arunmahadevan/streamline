@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>runtime</module>
-        <module>runtime</module>
         <module>actions</module>
     </modules>
 
