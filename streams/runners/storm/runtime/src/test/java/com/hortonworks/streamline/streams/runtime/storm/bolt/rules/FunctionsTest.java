@@ -62,6 +62,76 @@ public class FunctionsTest {
         };
     }
 
+    @Test
+    public void testMathFunctions1() throws Exception {
+        doTest(readFile("/streamline-udf-math1.json"), getTuple());
+        new Verifications() {
+            {
+                String streamId;
+                Tuple anchor;
+                List<List<Object>> tuples = new ArrayList<>();
+                mockCollector.emit(streamId = withCapture(), anchor = withCapture(), withCapture(tuples));
+                Assert.assertEquals(1, tuples.size());
+                Assert.assertEquals("POWER 1024.0 ABS 1.0 MOD 0 SQRT 1.4142135623730951 LN 0.6931471805599453" +
+                                " LOG10 0.3010299956639812 EXP 7.38905609893065 CEIL 2.0 FLOOR 1.0",
+                        ((StreamlineEvent)(tuples.get(0).get(0))).get("body"));
+            }
+        };
+    }
+
+    @Test
+    public void testMathFunctions2() throws Exception {
+        doTest(readFile("/streamline-udf-math2.json"), getTuple());
+        new Verifications() {
+            {
+                String streamId;
+                Tuple anchor;
+                List<List<Object>> tuples = new ArrayList<>();
+                mockCollector.emit(streamId = withCapture(), anchor = withCapture(), withCapture(tuples));
+                Assert.assertEquals(1, tuples.size());
+                String res[] = (((StreamlineEvent)(tuples.get(0).get(0))).get("body")).toString().split(" ");
+                Assert.assertEquals("RAND", res[0]);
+                Double rand = Double.valueOf(res[1]);
+                Assert.assertTrue(rand >= 0.0 && rand <= 1.0);
+                Assert.assertEquals("RAND_INTEGER", res[2]);
+                Integer rand_int = Integer.valueOf(res[3]);
+                Assert.assertTrue(rand_int >= 0 && rand_int <= 100);
+            }
+        };
+    }
+
+    @Test
+    public void testMathFunctions3() throws Exception {
+        doTest(readFile("/streamline-udf-math3.json"), getTuple3());
+        new Verifications() {
+            {
+                String streamId;
+                Tuple anchor;
+                List<List<Object>> tuples = new ArrayList<>();
+                mockCollector.emit(streamId = withCapture(), anchor = withCapture(), withCapture(tuples));
+                Assert.assertEquals(1, tuples.size());
+                Assert.assertEquals("ASIN 1.5707963267948966 ACOS 0.0 ATAN 0.7853981633974483 ATAN2 0.7853981633974483 SIN 0.8414709848078965 COS 0.5403023058681398 TAN 1.5574077246549023 COT 0.6420926159343306",
+                        ((StreamlineEvent)(tuples.get(0).get(0))).get("body"));
+            }
+        };
+    }
+
+    @Test
+    public void testMathFunctions4() throws Exception {
+        doTest(readFile("/streamline-udf-math4.json"), getTuple3());
+        new Verifications() {
+            {
+                String streamId;
+                Tuple anchor;
+                List<List<Object>> tuples = new ArrayList<>();
+                mockCollector.emit(streamId = withCapture(), anchor = withCapture(), withCapture(tuples));
+                Assert.assertEquals(1, tuples.size());
+                Assert.assertEquals("DEGREES 57.29577951308232 RADIANS 0.017453292519943295 ROUND 3.56 TRUNCATE 3.55 SIGN -1",
+                        ((StreamlineEvent)(tuples.get(0).get(0))).get("body"));
+            }
+        };
+    }
+
     private void doTest(String rulesJson, Tuple tuple) throws Exception {
         RulesBolt rulesBolt = new RulesBolt(rulesJson, RuleProcessorRuntime.ScriptType.SQL) {
             @Override
@@ -78,7 +148,15 @@ public class FunctionsTest {
     }
 
     private Tuple getTuple() {
-        StreamlineEvent event = new StreamlineEventImpl(ImmutableMap.of("intfield", 100, "stringfield1", "hello", "stringfield2", "world"), "dsrcid");
+        StreamlineEvent event = new StreamlineEventImpl(ImmutableMap.of("intfield", 2, "stringfield1", "hello", "stringfield2", "world",
+                "negativefield", -1.0, "doublefield", 1.41), "dsrcid");
         return new TupleImpl(mockContext, new Values(event), 1, "inputstream");
     }
+
+    private Tuple getTuple3() {
+        StreamlineEvent event = new StreamlineEventImpl(ImmutableMap.of("doublefield", 1.0, "doublefield2", 3.55555, "intfield", -3), "dsrcid");
+        return new TupleImpl(mockContext, new Values(event), 1, "inputstream");
+    }
+
+
 }

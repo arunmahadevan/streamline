@@ -1,0 +1,171 @@
+{
+  "outputStreams": [
+    {
+      "id": "outputstream",
+      "schema": {
+        "fields": [
+          {
+            "name": "intfield",
+            "type": "INTEGER",
+            "optional": true
+          },
+          {
+            "name": "stringfield1",
+            "type": "STRING",
+            "optional": false
+          },
+          {
+            "name": "stringfield2",
+            "type": "STRING",
+            "optional": false
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": 1,
+      "name": "test",
+      "description": "test",
+      "ruleProcessorName": "test",
+      "streams": [
+        "inputstream"
+      ],
+      "projection": {
+        "expressions": [
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "ASIN", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "ASIN"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "ACOS", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "ACOS"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "ATAN", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "ATAN"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "ATAN2", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                },
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "ATAN2"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "SIN", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "SIN"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "COS", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "COS"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "TAN", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "TAN"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "COT", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "COT"
+          }
+        ]
+      },
+      "groupBy": null,
+      "having": null,
+      "window": null,
+      "actions": [
+        {
+          "name": "notificationsink",
+          "outputFieldsAndDefaults": {
+            "body": "ASIN ${ASIN} ACOS ${ACOS} ATAN ${ATAN} ATAN2 ${ATAN2} SIN ${SIN} COS ${COS} TAN ${TAN} COT ${COT}"
+          },
+          "outputStreams": ["outputstream"],
+          "notifierName": "email_notifier",
+          "__type": "com.hortonworks.streamline.streams.layout.component.rule.action.NotifierAction"
+        }
+      ]
+    }
+  ]
+}

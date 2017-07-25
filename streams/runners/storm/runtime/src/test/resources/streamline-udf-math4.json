@@ -1,0 +1,133 @@
+{
+  "outputStreams": [
+    {
+      "id": "outputstream",
+      "schema": {
+        "fields": [
+          {
+            "name": "intfield",
+            "type": "INTEGER",
+            "optional": true
+          },
+          {
+            "name": "stringfield1",
+            "type": "STRING",
+            "optional": false
+          },
+          {
+            "name": "stringfield2",
+            "type": "STRING",
+            "optional": false
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": 1,
+      "name": "test",
+      "description": "test",
+      "ruleProcessorName": "test",
+      "streams": [
+        "inputstream"
+      ],
+      "projection": {
+        "expressions": [
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "DEGREES", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "DEGREES"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "RADIANS", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield", "type": "DOUBLE", "optional": false}
+                }
+              ]
+            },
+            "alias": "RADIANS"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "ROUND", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield2", "type": "DOUBLE", "optional": false}
+                },
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.Literal",
+                  "value": "2"
+                }
+              ]
+            },
+            "alias": "ROUND"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "TRUNCATE", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "doublefield2", "type": "DOUBLE", "optional": false}
+                },
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.Literal",
+                  "value": "2"
+                }
+              ]
+            },
+            "alias": "TRUNCATE"
+          },
+          {
+            "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.AsExpression",
+            "expression": {
+              "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FunctionExpression",
+              "function": {"name": "SIGN", "className": "builtin", "udf": false},
+              "operands": [
+                {
+                  "class": "com.hortonworks.streamline.streams.layout.component.rule.expression.FieldExpression",
+                  "value": {"name": "intfield", "type": "INTEGER", "optional": false}
+                }
+              ]
+            },
+            "alias": "SIGN"
+          }
+        ]
+      },
+      "groupBy": null,
+      "having": null,
+      "window": null,
+      "actions": [
+        {
+          "name": "notificationsink",
+          "outputFieldsAndDefaults": {
+            "body": "DEGREES ${DEGREES} RADIANS ${RADIANS} ROUND ${ROUND} TRUNCATE ${TRUNCATE} SIGN ${SIGN}"
+          },
+          "outputStreams": ["outputstream"],
+          "notifierName": "email_notifier",
+          "__type": "com.hortonworks.streamline.streams.layout.component.rule.action.NotifierAction"
+        }
+      ]
+    }
+  ]
+}
