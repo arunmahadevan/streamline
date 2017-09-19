@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# testing merge script ISSUE-923
+
 #
 # Copyright 2017 Hortonworks.
 #
