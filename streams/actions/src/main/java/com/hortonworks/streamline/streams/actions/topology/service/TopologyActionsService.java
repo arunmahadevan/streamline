@@ -29,7 +29,6 @@ import com.hortonworks.streamline.streams.actions.container.TopologyActionsConta
 import com.hortonworks.streamline.streams.actions.topology.state.TopologyContext;
 import com.hortonworks.streamline.streams.actions.topology.state.TopologyState;
 import com.hortonworks.streamline.streams.actions.topology.state.TopologyStateFactory;
-import com.hortonworks.streamline.streams.actions.topology.state.TopologyStates;
 import com.hortonworks.streamline.streams.catalog.CatalogToLayoutConverter;
 import com.hortonworks.streamline.streams.catalog.Topology;
 import com.hortonworks.streamline.streams.catalog.TopologyTestRunCase;
@@ -67,8 +66,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
-import static com.hortonworks.streamline.streams.actions.topology.state.TopologyStates.TOPOLOGY_STATE_INITIAL;
 
 public class TopologyActionsService implements ContainingNamespaceAwareContainer {
     private static final Logger LOG = LoggerFactory.getLogger(TopologyActionsService.class);
@@ -119,7 +116,7 @@ public class TopologyActionsService implements ContainingNamespaceAwareContainer
         TopologyContext ctx = managedTransaction.executeFunction(() -> getTopologyContext(topology, asUser));
 
         LOG.debug("Deploying topology {}", topology);
-        while (ctx.getState() != TopologyStates.TOPOLOGY_STATE_DEPLOYED) {
+        while (ctx.getState() != stateFactory.deployedState()) {
             managedTransaction.executeConsumer((topologyContext) -> {
                 LOG.debug("Current state {}", topologyContext.getStateName());
                 topologyContext.deploy();
@@ -348,7 +345,7 @@ public class TopologyActionsService implements ContainingNamespaceAwareContainer
         TopologyState state = catalogService
                 .getTopologyState(topology.getId())
                 .map(s -> stateFactory.getTopologyState(s.getName()))
-                .orElse(TOPOLOGY_STATE_INITIAL);
+                .orElse(stateFactory.initialState());
         return new TopologyContext(topology, this, state, asUser);
     }
 

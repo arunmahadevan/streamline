@@ -33,10 +33,6 @@ public class TopologyContext implements TopologyActionContext {
     private TopologyState state;
     private String asUser;
 
-    public TopologyContext(Topology topology, TopologyActionsService actionsService) {
-        this(topology, actionsService, TopologyStates.TOPOLOGY_STATE_INITIAL, null);
-    }
-
     public TopologyContext(Topology topology, TopologyActionsService actionsService, TopologyState state, String asUser) {
         Objects.requireNonNull(topology, "null topology");
         Objects.requireNonNull(actionsService, "null actionsService");
